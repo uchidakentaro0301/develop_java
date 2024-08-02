@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>カート内詳細画面</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">カート内詳細画面</h1>
+        <div class="cart-details">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>商品画像</th>
+                        <th>商品名</th>
+                        <th>価格</th>
+                        <th>数量</th>
+                        <th>小計</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cartItem : ${cartItems}">
+                        <td><img th:src="@{${cartItem.product.imgPath}}" alt="商品画像" class="img-thumbnail"></td>
+                        <td th:text="${cartItem.product.productName}">商品名</td>
+                        <td th:text="${#numbers.formatDecimal(cartItem.product.price * (1 + (cartItem.product.includeTax / 100.0)), 0, 0)}">価格</td>
+                        <td th:text="${cartItem.quantity}">数量</td>
+                        <td th:text="${#numbers.formatDecimal(cartItem.product.price * cartItem.quantity * (1 + (cartItem.product.includeTax / 100.0)), 0, 0)}">小計</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <p>合計金額: <span th:text="${#numbers.formatDecimal(totalAmount, 0, 0)}">合計金額</span>円</p>
+            </div>
+            <div class="d-grid gap-3 d-md-flex justify-content-md-center btns">
+				<!-- ここのレジに進むは決済完了後の画面遷移に仮設定してあります。-->
+                <a class="btn btn-primary" th:href="@{/views/checkout(orderId=${orderId})}">レジに進む</a>
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='/views'">買い物を続ける</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

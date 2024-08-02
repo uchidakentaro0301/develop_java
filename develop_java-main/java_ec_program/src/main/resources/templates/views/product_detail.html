@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品詳細画面</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">商品詳細画面</h1>
+        <div class="product-details-container">
+            <div class="product-details">
+                <h2>商品情報</h2>
+                <img th:src="${product.imgPath}" alt="商品画像" class="product-image mb-3">
+                <p>商品名: <span th:text="${product.productName}"></span></p>
+                <p>メーカー名: <span th:text="${companyName}"></span></p>
+                <p>価格: <span th:text="${#numbers.formatDecimal(product.price * (1 + (product.includeTax / 100.0)), 0, 0)}"></span>円(税込み)</p>
+                <p>在庫数: <span th:text="${product.stock}"></span></p>
+                <button type="button" class="btn btn-primary" onclick="window.location.href='/'">今すぐ購入する</button>
+
+                <div class="reviews">
+                    <h3>レビュー</h3>
+                    <div th:each="review, iterStat : ${reviews}">
+                        <div class="review">
+                            <h5><span th:text="${review.post}"></span><span class="star" th:each="i : ${#numbers.sequence(1, review.rating)}">★</span></h5>
+                            <p><span th:text="${review.userId}"></span> : <span th:text="${formattedDates[iterStat.index]}"></span></p>
+                            <p>コメント: <span th:text="${review.comment}"></span></p>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='/'">口コミへ書込み</button>
+            </div>
+
+            <!-- サイドバー -->
+            <div class="sidebar">
+                <form th:action="@{/views/add_to_cart}" method="post">
+                    <button type="submit" class="btn btn-primary">カートに入れる</button>
+                    <div class="form-group mt-3">
+                        <label for="quantity">数量</label>
+                        <input type="number" id="quantity" name="quantity" min="1" value="1" class="form-control" required>
+                    </div>
+                    <input type="hidden" name="productId" th:value="${product.product_id}" />
+                    <div class="form-group mt-3">
+                        <p>商品名: <span th:text="${product.productName}"></span></p>
+                        <p>メーカー名: <span th:text="${companyName}"></span></p>
+                        <p>価格: <span th:text="${#numbers.formatDecimal(product.price * (1 + (product.includeTax / 100.0)), 0, 0)}"></span>円(税込み)</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

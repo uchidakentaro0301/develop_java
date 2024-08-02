@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注文完了画面</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+    <div class="container">
+		<h1 class="text-center my-4">注文完了</h1>
+        <h2 class="text-center my-4">ご注文ありがとうございました！</h2>
+        <div class="complete-details">
+        	<p class="mb-0">注文番号: <span th:text="${orderId}"></span></p>
+        	<div class="d-flex flex-column align-items-start">
+            	<div th:each="orderItem : ${orderItems}" class="order-item">
+                	<p class="mb-0">商品ID: <span th:text="${orderItem.product.product_id}"></span></p>
+                	<p class="mb-0">商品名: <span th:text="${orderItem.product.productName}"></span></p>
+                	<p class="mb-0">個数: <span th:text="${orderItem.quantity}"></span></p>
+                	<p class="mb-0">価格: <span th:text="${#numbers.formatDecimal(orderItem.price * orderItem.quantity * (1 + (orderItem.product.includeTax / 100.0)), 0, 0)}"></span>円(税込み)</p>
+                	<p>合計金額: <span th:text="${#numbers.formatDecimal(totalAmount, 0, 0)}"></span>円(税込み)</p>
+            	</div>
+        	</div>
+        </div>
+        <div class="d-grid gap-3 d-md-flex justify-content-md-center btns">
+        	<button type="button" class="btn btn-secondary" onclick="window.location.href='/'">Top</button>
+    	</div>
+    </div>
+</body>
+</html>
