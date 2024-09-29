@@ -46,7 +46,7 @@
 		                            <h5><span th:text="${review.post}"></span><span class="star" th:each="i : ${#numbers.sequence(1, review.rating)}">★</span></h5>
 		                            <p><span th:text="${formattedDates[iterStat.index]}"></span></p>
 		                            <p><span>コメント: </span><span th:text="${review.comment}"></span></p>
-		                            <br>
+		                            <hr>
 		                        </div>
 		                    </div>
 		                </div>
@@ -55,7 +55,7 @@
 
 
             <!-- サイドバー -->
-            <div class="sidebar">
+            <brdiv class="sidebar">
                 <form th:action="@{/views/add_to_cart}" method="post">
                     <button type="submit" class="btn btn-primary">カートに入れる</button>
                     <div class="form-group mt-3">
@@ -82,6 +82,7 @@
                     </div>
                 </form>
                 <a th:href="@{/views/purchase_detail(productId=${product.product_id}, quantity=1)}" class="btn btn-primary">単品購入</a>
+                </br>
                 <a th:href="@{/views/product_review/{productId}(productId=${product.product_id})}" class="btn btn-primary">口コミへ書込み</a>
             </div>
         </div>
