@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>トップ</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+<!--	 ヘッダー -->
+    <div th:replace="views/layouts/header :: header"></div>
+    
+    <div class="container">
+        <h1 class="text-center my-4">トップ</h1>
+        <div class="row">
+            <div th:each="product : ${productList}" class="col-md-4 mb-4">
+                <div class="card">
+                    <a th:href="@{/views/product_detail/{productId}(productId=${product.product_id})}">
+                        <!-- 画像がある場合は表示、ない場合は代替画像を表示 -->
+                    	<img th:src="${product.imgPath != null && !product.imgPath.isEmpty() ? product.imgPath : 'https://via.placeholder.com/450x300?text=No+Image'}" 
+                         	class="card-img-top" alt="商品画像"
+                         	onerror="this.onerror=null;this.src='https://via.placeholder.com/450x300?text=No+Image';">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

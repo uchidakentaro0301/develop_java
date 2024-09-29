@@ -7,5 +7,5 @@ import jp.co.sss.java_ec_program.entity.Users;
 
 @Repository
 public interface UserRepository extends JpaRepository<Users, Long> {
-    Users findByUserName(String userName);
+    Users findByEmail(String email);
 }

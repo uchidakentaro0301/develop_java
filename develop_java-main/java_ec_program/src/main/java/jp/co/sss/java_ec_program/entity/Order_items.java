@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -13,6 +15,7 @@ import jakarta.persistence.Table;
 @Table(name = "order_items")
 public class Order_items {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_item_id")
     private Integer order_item_id;
 
@@ -53,12 +56,12 @@ public class Order_items {
         this.order = order;
     }
 
-    public Products getProduct() {
+    public Products getProductId() {
         return productId;
     }
 
-    public void setProduct(Products product) {
-        this.productId = product;
+    public void setProductId(Products productId) {
+        this.productId = productId;
     }
 
     public Integer getQuantity() {

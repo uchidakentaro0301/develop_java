@@ -1,18 +1,25 @@
 package jp.co.sss.java_ec_program.entity;
 
 import java.sql.Timestamp;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "orders")
 public class Orders {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private Integer orderId;
 
@@ -23,6 +30,7 @@ public class Orders {
     @Column(name = "total_amount")
     private Integer totalAmount;
 
+    @Column(name = "status", nullable = false)
     private String status;
 
     @Column(name = "created_at")
@@ -30,6 +38,9 @@ public class Orders {
 
     @Column(name = "updated_at")
     private Timestamp updatedAt;
+    
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Order_items> orderItems;
 
     // Getters and Setters
     public Integer getOrderId() {

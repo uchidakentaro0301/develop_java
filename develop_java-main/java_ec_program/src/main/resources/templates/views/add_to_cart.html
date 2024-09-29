@@ -10,17 +10,20 @@
 <body>
     <div class="container">
         <h1 class="text-center my-4">カート追加画面</h1>
-        <div class="row">
-			<div class="add_to_cart-details">
-            	<div class="col-md-4">
-                	<img th:src="@{${product.imgPath}}" alt="商品画像" class="product-image mb-4">
-                	<div class="d-grid gap-3 d-md-flex justify-content-md-center btns">
-                    	<button type="button" class="btn btn-primary" onclick="window.location.href='/'">今すぐ購入</button>
-                    	<button type="button" class="btn btn-secondary" onclick="window.location.href='/java_ec_program/views/cart_detail'">カート内詳細画面</button>
-                    	<button type="button" class="btn btn-secondary" onclick="window.location.href='/'">Top</button>
-                	</div>
+        <!-- エラーメッセージの表示 -->
+		<div th:if="${error}">
+		    <p th:text="${error}" style="color: red;"></p>
+		</div>
+		<div class="add_to_cart-details">
+        	<div class="row">
+            	<div class="col-4">
+                	<!-- 画像がある場合は表示、ない場合はプレースホルダー画像を表示 -->
+                    <img th:src="${product.imgPath != null && !product.imgPath.isEmpty() ? product.imgPath : 'https://via.placeholder.com/450x300?text=No+Image'}" 
+                         class="card-img-top" alt="商品画像"
+                         onerror="this.onerror=null;this.src='https://via.placeholder.com/450x300?text=No+Image';">
+
             	</div>
-            	<div class="col-md-8">
+            	<div class="col-6">
                 	<div class="right-contents">
                     	<p class="mb-0">商品名: <span th:text="${product.productName}"></span></p>
                     	<p class="mb-0">価格: <span th:text="${#numbers.formatDecimal(product.price * (1 + (product.includeTax / 100.0)), 0, 0)}"></span>円(税込み)</p>
@@ -29,6 +32,15 @@
                 	</div>
             	</div>
             </div>
+            <div>
+				<div class="row justify-content-around">
+	            	<form th:action="@{/views/purchase_detail}" method="get" class="btn btn-primary col-sm">
+				        <button type="submit" class="btn btn-primary">今すぐ購入</button>
+				    </form>
+	            	<button type="button" class="btn btn-secondary col-sm" onclick="window.location.href='/java_ec_program/views/cart_detail'">カート内詳細画面</button>
+	            	<button type="button" class="btn btn-secondary col-sm" onclick="window.location.href='/java_ec_program/views/top'">Topに戻る</button>
+	        	</div>
+        	</div>
         </div>
     </div>
 </body>

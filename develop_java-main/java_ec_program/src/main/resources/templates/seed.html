@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <p>
+INSERT INTO products (product_name, price, stock, comment, img_path, company_id, category_id, include_tax) VALUES
+('Product D', 150, 40, 'Description for Product D', 'https://via.placeholder.com/450x300', 2, 2, 10),
+('Product E', 250, 60, 'Description for Product E', 'https://via.placeholder.com/450x300', 2, 2, 10),
+('Product F', 350, 10, 'Description for Product F', 'https://via.placeholder.com/450x300', 2, 2, 10),
+('Product G', 120, 70, 'Description for Product G', 'https://via.placeholder.com/450x300', 3, 3, 8),
+('Product H', 220, 15, 'Description for Product H', 'https://via.placeholder.com/450x300', 3, 3, 8),
+('Product I', 320, 25, 'Description for Product I', 'https://via.placeholder.com/450x300', 3, 3, 8),
+('Product J', 180, 45, 'Description for Product J', 'https://via.placeholder.com/450x300', 1, 4, 12),
+('Product K', 280, 55, 'Description for Product K', 'https://via.placeholder.com/450x300', 1, 4, 12),
+('Product L', 380, 35, 'Description for Product L', 'https://via.placeholder.com/450x300', 1, 4, 12),
+('Product M', 110, 80, 'Description for Product M', 'https://via.placeholder.com/450x300', 2, 5, 10),
+('Product N', 210, 65, 'Description for Product N', 'https://via.placeholder.com/450x300', 2, 5, 10),
+('Product O', 310, 85, 'Description for Product O', 'https://via.placeholder.com/450x300', 2, 5, 10),
+('Product P', 130, 90, 'Description for Product P', 'https://via.placeholder.com/450x300', 3, 6, 9),
+('Product Q', 230, 20, 'Description for Product Q', 'https://via.placeholder.com/450x300', 3, 6, 9),
+('Product R', 330, 30, 'Description for Product R', 'https://via.placeholder.com/450x300', 3, 6, 9),
+('Product S', 160, 50, 'Description for Product S', 'https://via.placeholder.com/450x300', 1, 7, 11),
+('Product T', 260, 40, 'Description for Product T', 'https://via.placeholder.com/450x300', 1, 7, 11),
+('Product U', 360, 45, 'Description for Product U', 'https://via.placeholder.com/450x300', 1, 7, 11),
+('Product V', 170, 35, 'Description for Product V', 'https://via.placeholder.com/450x300', 2, 8, 10),
+('Product W', 270, 75, 'Description for Product W', 'https://via.placeholder.com/450x300', 2, 8, 10),
+('Product X', 370, 65, 'Description for Product X', 'https://via.placeholder.com/450x300', 2, 8, 10),
+('Product Y', 140, 55, 'Description for Product Y', 'https://via.placeholder.com/450x300', 3, 9, 7),
+('Product Z', 240, 25, 'Description for Product Z', 'https://via.placeholder.com/450x300', 3, 9, 7),
+('Product AA', 340, 15, 'Description for Product AA', 'https://via.placeholder.com/450x300', 3, 9, 7),
+('Product AB', 180, 45, 'Description for Product AB', 'https://via.placeholder.com/450x300', 1, 10, 12),
+('Product AC', 280, 35, 'Description for Product AC', 'https://via.placeholder.com/450x300', 1, 10, 12),
+('Product AD', 380, 85, 'Description for Product AD', 'https://via.placeholder.com/450x300', 1, 10, 12),
+('Product AE', 120, 60, 'Description for Product AE', 'https://via.placeholder.com/450x300', 2, 11, 10),
+('Product AF', 220, 25, 'Description for Product AF', 'https://via.placeholder.com/450x300', 2, 11, 10),
+('Product AG', 320, 40, 'Description for Product AG', 'https://via.placeholder.com/450x300', 2, 11, 10),
+('Product AH', 150, 70, 'Description for Product AH', 'https://via.placeholder.com/450x300', 3, 12, 8),
+('Product AI', 250, 30, 'Description for Product AI', 'https://via.placeholder.com/450x300', 3, 12, 8),
+('Product AJ', 350, 20, 'Description for Product AJ', 'https://via.placeholder.com/450x300', 3, 12, 8),
+('Product AK', 200, 40, 'Description for Product AK', 'https://via.placeholder.com/450x300', 1, 13, 10),
+('Product AL', 300, 70, 'Description for Product AL', 'https://via.placeholder.com/450x300', 1, 13, 10),
+('Product AM', 400, 55, 'Description for Product AM', 'https://via.placeholder.com/450x300', 1, 13, 10),
+('Product AN', 130, 80, 'Description for Product AN', 'https://via.placeholder.com/450x300', 2, 14, 9),
+('Product AO', 230, 35, 'Description for Product AO', 'https://via.placeholder.com/450x300', 2, 14, 9),
+('Product AP', 330, 45, 'Description for Product AP', 'https://via.placeholder.com/450x300', 2, 14, 9),
+('Product AQ', 170, 25, 'Description for Product AQ', 'https://via.placeholder.com/450x300', 3, 15, 11),
+('Product AR', 270, 55, 'Description for Product AR', 'https://via.placeholder.com/450x300', 3, 15, 11),
+('Product AS', 370, 15, 'Description for Product AS', 'https://via.placeholder.com/450x300', 3, 15, 11),
+('Product AT', 140, 60, 'Description for Product AT', 'https://via.placeholder.com/450x300', 1, 16, 10),
+('Product AU', 240, 30, 'Description for Product AU', 'https://via.placeholder.com/450x300', 1, 16, 10),
+('Product AV', 340, 20, 'Description for Product AV', 'https://via.placeholder.com/450x300', 1, 16, 10),
+('Product AW', 190, 50, 'Description for Product AW', 'https://via.placeholder.com/450x300', 2, 17, 12),
+('Product AX', 290, 65, 'Description for Product AX', 'https://via.placeholder.com/450x300', 2, 17, 12),
+('Product AY', 390, 75, 'Description for Product AY', 'https://via.placeholder.com/450x300', 2, 17, 12),
+('Product AZ', 120, 85, 'Description for Product AZ', 'https://via.placeholder.com/450x300', 3, 18, 8);
+	</p>
+</body>
+</html>

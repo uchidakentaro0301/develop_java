@@ -29,10 +29,10 @@ public class LoginCheckFilter extends HttpFilter {
             throws IOException, ServletException {
 
         if ("/views/users/login".equals(request.getRequestURI()) && "POST".equalsIgnoreCase(request.getMethod())) {
-            String username = request.getParameter("username");
+            String email = request.getParameter("email");
             String password = request.getParameter("password");
 
-            Users user = userRepository.findByUserName(username);
+            Users user = userRepository.findByEmail(email);
             if (user != null && user.getPasswords().equals(password)) {
                 userSession.setUser(user);
                 response.sendRedirect(request.getContextPath() + "/views/product_detail/1"); // ここにはログイン後のリダイレクトページ

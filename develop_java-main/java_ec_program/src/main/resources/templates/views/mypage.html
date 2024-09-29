@@ -1,10 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>マイページ</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
 </head>
 <body>
-<h1>hello</h1>>
+<!--	 ヘッダー -->
+    <div th:replace="views/layouts/header :: header"></div>
+    
+    <div class="container">
+        <h1 class="text-center my-4">マイページ</h1>
+        <form th:action="@{/views/mypage}" method="post">
+            <!-- 受け取り情報入力フォーム -->
+            <!-- 名前 -->
+            <div class="form-group">
+                <label for="name">お名前</label>
+                <input type="text" id="name" name="name" class="form-control" 
+                       th:value="${userSession.user.userName ?: ''}" required>
+            </div>
+
+            <!-- メールアドレス -->
+            <div class="form-group">
+                <label for="email">メールアドレス</label>
+                <input type="email" id="email" name="email" class="form-control"
+                       th:value="${userSession.user.email ?: ''}" required>
+            </div>
+
+            <!-- 電話番号 -->
+            <div class="form-group">
+                <label for="phone">電話番号</label>
+                <input type="text" id="phone" name="phone" class="form-control"
+                       th:value="${userSession.user.phone ?: ''}" required>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">保存する</button>
+                <a href="/java_ec_program/views/top" class="btn btn-secondary">トップへ戻る</a>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

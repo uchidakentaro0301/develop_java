@@ -10,46 +10,79 @@
 <body>
     <div class="container">
         <h1 class="text-center my-4">商品詳細画面</h1>
+        <!-- エラーメッセージの表示 -->
+		<div th:if="${error}">
+		    <p th:text="${error}" style="color: red;"></p>
+		</div>
         <div class="product-details-container">
-            <div class="product-details">
-                <h2>商品情報</h2>
-                <img th:src="${product.imgPath}" alt="商品画像" class="product-image mb-3">
-                <p>商品名: <span th:text="${product.productName}"></span></p>
-                <p>メーカー名: <span th:text="${companyName}"></span></p>
-                <p>価格: <span th:text="${#numbers.formatDecimal(product.price * (1 + (product.includeTax / 100.0)), 0, 0)}"></span>円(税込み)</p>
-                <p>在庫数: <span th:text="${product.stock}"></span></p>
-                <button type="button" class="btn btn-primary" onclick="window.location.href='/'">今すぐ購入する</button>
+            <div class="row">
+                
 
-                <div class="reviews">
-                    <h3>レビュー</h3>
-                    <div th:each="review, iterStat : ${reviews}">
-                        <div class="review">
-                            <h5><span th:text="${review.post}"></span><span class="star" th:each="i : ${#numbers.sequence(1, review.rating)}">★</span></h5>
-                            <p><span th:text="${review.userId}"></span> : <span th:text="${formattedDates[iterStat.index]}"></span></p>
-                            <p>コメント: <span th:text="${review.comment}"></span></p>
-                            <br>
-                        </div>
-                    </div>
+				<div class="img-thumbnail col-4">
+	                <!-- 画像がある場合は表示、ない場合はプレースホルダー画像を表示 -->
+	                <img th:src="${product.imgPath != null && !product.imgPath.isEmpty() ? product.imgPath : 'https://via.placeholder.com/450x300?text=No+Image'}" 
+	                     class="card-img-top" alt="商品画像"
+	                     onerror="this.onerror=null;this.src='https://via.placeholder.com/450x300?text=No+Image';">
+                </div>
+                <div class="col-6">
+					<h2>商品情報</h2>
+	                <p>商品名: <span th:text="${product.productName}"></span></p>
+	                <p>メーカー名: <span th:text="${companyName}"></span></p>
+	                <p>価格: <span th:text="${#numbers.formatDecimal(product.price * (1 + (product.includeTax / 100.0)), 0, 0)}"></span>円(税抜 <span th:text="${product.price}"></span>円)</p>
+	                <p>在庫数: <span th:text="${product.stock}"></span></p>
+	                <button type="button" class="btn btn-secondary" onclick="window.location.href='/java_ec_program/views/top'">Topに戻る</button>
+	
+	                <!-- 「今すぐ購入する」ボタン：productIdとquantityを渡す -->
+	                <a th:href="@{/views/purchase_detail(productId=${product.product_id}, quantity=1)}" class="btn btn-primary">単品購入</a>
+				</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3 offset-md-1">
+		                <div class="reviews">
+		                    <h3>レビュー</h3>
+		                    <a th:href="@{/views/product_review/{productId}(productId=${product.product_id})}" class="btn btn-primary">口コミへ書込み</a>
+		                    <div th:each="review, iterStat : ${reviews}">
+		                        <div class="review">
+		                            <h5><span th:text="${review.post}"></span><span class="star" th:each="i : ${#numbers.sequence(1, review.rating)}">★</span></h5>
+		                            <p><span th:text="${formattedDates[iterStat.index]}"></span></p>
+		                            <p><span>コメント: </span><span th:text="${review.comment}"></span></p>
+		                            <br>
+		                        </div>
+		                    </div>
+		                </div>
+	                </div>
                 </div>
 
-                <button type="button" class="btn btn-secondary" onclick="window.location.href='/'">口コミへ書込み</button>
-            </div>
 
             <!-- サイドバー -->
             <div class="sidebar">
                 <form th:action="@{/views/add_to_cart}" method="post">
                     <button type="submit" class="btn btn-primary">カートに入れる</button>
                     <div class="form-group mt-3">
-                        <label for="quantity">数量</label>
-                        <input type="number" id="quantity" name="quantity" min="1" value="1" class="form-control" required>
-                    </div>
+					    <label for="quantity">数量</label>
+					    <select id="quantity" name="quantity" class="form-control" required>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+					        <option value="3">3</option>
+					        <option value="4">4</option>
+					        <option value="5">5</option>
+					        <option value="6">6</option>
+					        <option value="7">7</option>
+					        <option value="8">8</option>
+					        <option value="9">9</option>
+					        <option value="10">10</option>
+					    </select>
+					</div>
                     <input type="hidden" name="productId" th:value="${product.product_id}" />
                     <div class="form-group mt-3">
                         <p>商品名: <span th:text="${product.productName}"></span></p>
                         <p>メーカー名: <span th:text="${companyName}"></span></p>
-                        <p>価格: <span th:text="${#numbers.formatDecimal(product.price * (1 + (product.includeTax / 100.0)), 0, 0)}"></span>円(税込み)</p>
+                        <p>価格: <span th:text="${#numbers.formatDecimal(product.price * (1 + (product.includeTax / 100.0)), 0, 0)}"></span>円(税抜 <span th:text="${product.price}"></span>円)</p>
+                        <p>在庫数: <span th:text="${product.stock}"></span></p>
                     </div>
                 </form>
+                <a th:href="@{/views/purchase_detail(productId=${product.product_id}, quantity=1)}" class="btn btn-primary">単品購入</a>
+                <a th:href="@{/views/product_review/{productId}(productId=${product.product_id})}" class="btn btn-primary">口コミへ書込み</a>
             </div>
         </div>
     </div>

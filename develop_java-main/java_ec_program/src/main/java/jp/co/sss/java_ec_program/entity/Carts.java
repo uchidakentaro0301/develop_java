@@ -23,7 +23,7 @@ public class Carts {
     private Users user;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", referencedColumnName = "product_id", nullable = false)
     private Products product;
 
     private Integer quantity;

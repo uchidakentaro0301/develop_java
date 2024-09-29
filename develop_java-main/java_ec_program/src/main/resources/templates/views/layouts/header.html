@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+    <header class="navbar bg-dark text-white p-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <!-- ユーザー名とログアウトリンク -->
+            <div class="d-flex align-items-center">
+                <span th:text="${userSession.user.userName}">ユーザー名</span> さん
+                <a th:href="@{/views/users/logout}" class="btn btn-outline-danger ml-2">ログアウト</a>
+            </div>
+
+            <!-- 検索フォーム -->
+            <form th:action="@{/views/search}" method="get" class="form-inline d-flex align-items-center mx-3">
+                <input class="form-control mr-2" type="search" name="keyword" placeholder="商品名で検索" aria-label="Search" required>
+                <button class="btn btn-outline-success" type="submit" name="productSearch">検索</button>
+            </form>
+
+            <!-- カテゴリー選択 -->
+            <form th:action="@{/views/searchByCategory}" method="get" class="form-inline d-flex align-items-center mx-3">
+                <select id="category-select" name="categoryId" class="form-control" onchange="this.form.submit()">
+                    <option value="">--カテゴリーを選択してください--</option>
+                    <option value="all">--すべて--</option>
+                    <option th:each="category : ${categories}"
+                        th:value="${category.categoryId}"
+                        th:text="${category.categoryName}">
+                    </option>
+                </select>
+            </form>
+
+            <!-- カートアイコン -->
+            <a th:href="@{/views/cart_detail}" class="nav-link d-flex align-items-center mx-3">
+                <div class="cart-icon position-relative">
+                    <span>カート</span>
+                    <span class="badge badge-danger position-absolute" th:text="${userSession.cartItemCount}">0</span>
+                </div>
+            </a>
+
+            <!-- マイページリンク -->
+            <a th:href="@{/views/mypage}" class="nav-link mx-3">マイページ</a>
+        </div>
+    </header>
+</body>
+</html>

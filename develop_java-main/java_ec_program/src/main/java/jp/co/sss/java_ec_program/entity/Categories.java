@@ -3,18 +3,20 @@ package jp.co.sss.java_ec_program.entity;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
+@Entity
 @Table(name = "categories")
 public class Categories {
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="seq_categories_gen")
     @SequenceGenerator(name = "seq_categories_gen", sequenceName ="seq_categories_gen", allocationSize = 1)
-    private Integer category_id;
+	private Integer categoryId;
     
     @Column(name = "category_name")
     private String categoryName;
@@ -31,12 +33,12 @@ public class Categories {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-	public Integer getCategory_id() {
-		return category_id;
+	public Integer getCategoryId() {
+		return categoryId;
 	}
 
-	public void setCategory_id(Integer category_id) {
-		this.category_id = category_id;
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	public String getCategoryName() {

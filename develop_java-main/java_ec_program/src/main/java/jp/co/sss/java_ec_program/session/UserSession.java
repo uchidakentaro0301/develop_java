@@ -10,6 +10,7 @@ import jp.co.sss.java_ec_program.entity.Users;
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserSession {
     private Users user;
+    private long cartItemCount; // カート内のアイテム数
 
     public Users getUser() {
         return user;
@@ -25,5 +26,14 @@ public class UserSession {
 
     public void logout() {
         this.user = null;
+    }
+    
+    // getter and setter
+    public long getCartItemCount() {
+        return cartItemCount;
+    }
+
+    public void setCartItemCount(long cartItemCount) {
+        this.cartItemCount = cartItemCount;
     }
 }
