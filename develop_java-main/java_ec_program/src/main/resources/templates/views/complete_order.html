@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注文完了画面</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+    <div class="container my-5">
+        <h1 class="text-center mb-4">注文が完了しました</h1>
+
+        <!-- 注文情報 -->
+        <div>
+            <h4>注文ID: <span th:text="${orderId}"></span></h4>
+            <h4>合計金額: <span th:text="${#numbers.formatDecimal(totalAmount, 0, 0)}"></span>円</h4>
+        </div>
+
+        <!-- 商品一覧 -->
+        <h3 class="mt-5">購入された商品</h3>
+        <div class="row">
+            <div class="col-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>商品画像</th>
+                            <th>商品名</th>
+                            <th>数量</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="orderItem : ${orderItems}">
+                            <td>
+                                <img th:src="${orderItem.productId.imgPath != null ? orderItem.productId.imgPath : 'https://via.placeholder.com/450x300?text=No+Image'}"
+                                     class="img-fluid" alt="商品画像" onerror="this.onerror=null;this.src='https://via.placeholder.com/450x300?text=No+Image';">
+                            </td>
+                            <td th:text="${orderItem.productId.productName}">商品名</td>
+                            <td th:text="${orderItem.quantity}">数量</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="text-center mt-5">
+            <a href="/java_ec_program/views/top" class="btn btn-primary">Topに戻る</a>
+        </div>
+    </div>
+</body>
+</html>

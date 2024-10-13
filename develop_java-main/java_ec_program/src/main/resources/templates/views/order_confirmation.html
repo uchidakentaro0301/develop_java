@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購入商品詳細画面</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+    <div class="container my-5">
+        <h1 class="text-center mb-4">購入確認画面</h1>
+
+        <!-- シナリオ1: 単品購入時の商品情報表示 -->
+        <div class="purchase-details" th:if="${singleProduct != null}">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>商品画像</th>
+                        <th>商品名</th>
+                        <th>価格</th>
+                        <th>数量</th>
+                        <th>小計</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+							<img th:src="${singleProduct.imgPath != null && !singleProduct.imgPath.isEmpty() ? singleProduct.imgPath : 'https://via.placeholder.com/450x300?text=No+Image'}" 
+		                         class="card-img-top" alt="商品画像"
+		                         onerror="this.onerror=null;this.src='https://via.placeholder.com/450x300?text=No+Image';">
+                         </td>
+                        <td th:text="${singleProduct.productName}">商品名</td>
+                        <td th:text="${#numbers.formatDecimal(singleProduct.price * (1 + (singleProduct.includeTax / 100.0)), 0, 0)}">価格</td>
+                        <td th:text="${quantity}">数量</td>
+                        <td th:text="${#numbers.formatDecimal(singleProduct.price * quantity * (1 + (singleProduct.includeTax / 100.0)), 0, 0)}">小計</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- シナリオ1の単品購入時 -->
+            <form th:action="@{/views/complete_order}" method="post">
+                <input type="hidden" name="productId" th:value="${singleProduct.product_id}"/>
+                <input type="hidden" name="quantity" th:value="${quantity}"/>
+                <!-- 受け取り情報入力フォーム -->
+                <!-- 名前 -->
+                <div class="form-group">
+                    <label for="name">お名前</label>
+                    <input type="text" id="name" name="name" class="form-control" 
+                           th:value="${userSession.user.userName ?: ''}" required readonly>
+                </div>
+
+                <!-- メールアドレス -->
+                <div class="form-group">
+                    <label for="email">メールアドレス</label>
+                    <input type="email" id="email" name="email" class="form-control"
+                           th:value="${userSession.user.email ?: ''}" required readonly>
+                </div>
+
+                <!-- 電話番号 -->
+                <div class="form-group">
+                    <label for="phone">電話番号</label>
+                    <input type="text" id="phone" name="phone" class="form-control"
+                           th:value="${userSession.user.phone ?: ''}" required readonly>
+                </div>
+
+                <!-- カード情報表示 -->
+			    <div class="form-group">
+			        <label>選択したカード情報</label>
+			        <input type="text" class="form-control" th:value="${cardInfo == 'newCard' ? newCardNumber : cardInfo}" required readonly>
+			    </div>
+			
+			    <!-- 住所表示 -->
+			    <div class="form-group">
+			        <label>選択した住所</label>
+			        <input type="text" class="form-control" th:value="${addressInfo == 'newAddress' ? newAddress : addressInfo}" required readonly>
+			    </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">購入を確認</button>
+                    <a href="/java_ec_program/views/product_list" class="btn btn-secondary">キャンセル</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- シナリオ2: カート内商品の表示 -->
+        <div class="purchase-details" th:if="${singleProduct == null}">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>商品画像</th>
+                        <th>商品名</th>
+                        <th>価格</th>
+                        <th>数量</th>
+                        <th>小計</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cartItem : ${cartItems}">
+                        <td>
+							<img th:src="${cartItem.product.imgPath != null && !cartItem.product.imgPath.isEmpty() ? cartItem.product.imgPath : 'https://via.placeholder.com/450x300?text=No+Image'}" 
+		                         class="card-img-top" alt="商品画像"
+		                         onerror="this.onerror=null;this.src='https://via.placeholder.com/450x300?text=No+Image';">
+						</td>
+                        <td th:text="${cartItem.product.productName}">商品名</td>
+                        <td th:text="${#numbers.formatDecimal(cartItem.product.price * (1 + (cartItem.product.includeTax / 100.0)), 0, 0)}">価格</td>
+                        <td th:text="${cartItem.quantity}">数量</td>
+                        <td th:text="${#numbers.formatDecimal(cartItem.product.price * cartItem.quantity * (1 + (cartItem.product.includeTax / 100.0)), 0, 0)}">小計</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- シナリオ2のカート全体購入時 -->
+            <form th:action="@{/views/complete_order}" method="post">
+                <!-- 受け取り情報入力フォーム -->
+                <!-- 名前 -->
+                <div class="form-group">
+                    <label for="name">お名前</label>
+                    <input type="text" id="name" name="name" class="form-control" 
+                           th:value="${userSession.user.userName ?: ''}" required readonly>
+                </div>
+
+                <!-- メールアドレス -->
+                <div class="form-group">
+                    <label for="email">メールアドレス</label>
+                    <input type="email" id="email" name="email" class="form-control"
+                           th:value="${userSession.user.email ?: ''}" required readonly>
+                </div>
+
+                <!-- 電話番号 -->
+                <div class="form-group">
+                    <label for="phone">電話番号</label>
+                    <input type="text" id="phone" name="phone" class="form-control"
+                           th:value="${userSession.user.phone ?: ''}" required readonly>
+                </div>
+
+                <!-- カード情報表示 -->
+			    <div class="form-group">
+			        <label>選択したカード情報</label>
+			        <input type="text" class="form-control" th:value="${cardInfo == 'newCard' ? newCardNumber : cardInfo}" required readonly>
+			    </div>
+			
+			    <!-- 住所表示 -->
+			    <div class="form-group">
+			        <label>選択した住所</label>
+			        <input type="text" class="form-control" th:value="${addressInfo == 'newAddress' ? newAddress : addressInfo}" required readonly>
+			    </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">購入を確認</button>
+                    <a href="/java_ec_program/views/cart_detail" class="btn btn-secondary">カートに戻る</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- 合計金額表示 -->
+        <p>合計金額: <span th:text="${#numbers.formatDecimal(totalAmount, 0, 0)}">合計金額</span>円</p>
+    </div>
+</body>
+</html>
